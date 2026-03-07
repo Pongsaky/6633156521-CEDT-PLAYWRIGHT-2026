@@ -1,4 +1,5 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from './fixtures';
+import type { Page } from '@playwright/test';
 
 const baseUrl = 'https://katalon-demo-cura.herokuapp.com/';
 
@@ -13,9 +14,9 @@ async function login(page: Page, username: string, password: string) {
   await page.getByRole('button', { name: 'Login' }).click();
 }
 
-test('login-valid', async ({ page }) => {
+test('login-valid', async ({ page, credentials }) => {
   await openLogin(page);
-  await login(page, 'John Doe', 'ThisIsNotAPassword');
+  await login(page, credentials.username, credentials.password);
 
   await expect(page.locator('section#appointment')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Make Appointment', level: 2 })).toBeVisible();
@@ -24,14 +25,18 @@ test('login-valid', async ({ page }) => {
 });
 
 const invalidCases = [
-  { name: 'login-fail-password', username: 'John Doe', password: 'wrongpassword' },
-  { name: 'login-fail-username', username: 'InvalidUser', password: 'ThisIsNotAPassword' },
+  { name: 'login-fail-password', password: 'wrongpassword' },
+  { name: 'login-fail-username', username: 'InvalidUser' },
 ];
 
 for (const { name, username, password } of invalidCases) {
-  test(name, async ({ page }) => {
+  test(name, async ({ page, credentials }) => {
     await openLogin(page);
-    await login(page, username, password);
+    await login(
+      page,
+      username ?? credentials.username,
+      password ?? credentials.password,
+    );
 
     await expect(page.getByText('Login failed! Please ensure the username and password are valid.')).toBeVisible();
     await expect(page.locator('section#appointment')).not.toBeVisible();

@@ -1,12 +1,12 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 const baseUrl = 'https://katalon-demo-cura.herokuapp.com/';
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page, credentials }) => {
   await page.goto(baseUrl);
   await page.getByRole('link', { name: 'Make Appointment' }).click();
-  await page.getByLabel('Username').fill('John Doe');
-  await page.getByLabel('Password').fill('ThisIsNotAPassword');
+  await page.getByLabel('Username').fill(credentials.username);
+  await page.getByLabel('Password').fill(credentials.password);
   await page.getByRole('button', { name: 'Login' }).click();
 });
 
