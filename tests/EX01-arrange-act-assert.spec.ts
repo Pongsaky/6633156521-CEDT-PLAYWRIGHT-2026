@@ -9,8 +9,8 @@ async function openLogin(page: Page) {
 }
 
 async function login(page: Page, username: string, password: string) {
-  await page.getByLabel('Username').fill(username);
-  await page.getByLabel('Password').fill(password);
+  await page.locator('#txt-username').fill(username);
+  await page.locator('#txt-password').fill(password);
   await page.getByRole('button', { name: 'Login' }).click();
 }
 
