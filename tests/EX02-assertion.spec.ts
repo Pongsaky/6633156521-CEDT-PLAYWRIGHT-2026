@@ -5,8 +5,8 @@ const baseUrl = 'https://katalon-demo-cura.herokuapp.com/';
 test.beforeEach(async ({ page, credentials }) => {
   await page.goto(baseUrl);
   await page.getByRole('link', { name: 'Make Appointment' }).click();
-  await page.getByLabel('Username').fill(credentials.username);
-  await page.getByLabel('Password').fill(credentials.password);
+  await page.locator('#txt-username').fill(credentials.username);
+  await page.locator('#txt-password').fill(credentials.password);
   await page.getByRole('button', { name: 'Login' }).click();
 });
 

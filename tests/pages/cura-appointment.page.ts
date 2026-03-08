@@ -20,8 +20,8 @@ export class CuraAppointmentPage {
   }
 
   async login(username: string, password: string) {
-    await this.page.getByLabel('Username').fill(username);
-    await this.page.getByLabel('Password').fill(password);
+    await this.page.locator('#txt-username').fill(username);
+    await this.page.locator('#txt-password').fill(password);
     await this.page.getByRole('button', { name: 'Login' }).click();
   }
 
