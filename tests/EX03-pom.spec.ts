@@ -1,5 +1,6 @@
 import { test } from './fixtures';
 import { CuraAppointmentPage } from './pages/cura-appointment.page';
+import { getFutureDateFormatted } from './utils/date';
 
 test('make-appointment-success-pom', async ({ page, credentials }) => {
   const curaPage = new CuraAppointmentPage(page);
@@ -7,7 +8,7 @@ test('make-appointment-success-pom', async ({ page, credentials }) => {
     facility: 'Seoul CURA Healthcare Center' as const,
     applyReadmission: true,
     healthcareProgram: 'Medicaid' as const,
-    visitDate: '10/10/2026',
+    visitDate: getFutureDateFormatted(7),
     comment: 'Book appointment with Page Object Model',
   };
 
